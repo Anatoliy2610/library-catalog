@@ -1,0 +1,2 @@
+SQL_BD_URL=sqlite:///./name.db
+SECRET_KEY_TOKEN=''

@@ -1,0 +1,8 @@
+venv/
+dist/
+__pycache__
+.vscode/
+*.cast
+.env
+books.db
+regist_primer/
