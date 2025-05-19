@@ -4,6 +4,7 @@ from app.database import Base
 
 
 class User(BaseModel):
+    id: int
     username: str
     email: EmailStr
 

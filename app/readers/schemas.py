@@ -1,16 +1,26 @@
 from pydantic import BaseModel, EmailStr
 
 
-class ReaderAdd(BaseModel):
+class ReaderBase(BaseModel):
     name: str
     email: EmailStr
 
 
-class ReaderUpdate(BaseModel):
+class Reader(ReaderBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class ReaderAdd(ReaderBase):
+    pass
+
+
+class ReaderUpdate(ReaderBase):
     name: str = None
-    email: EmailStr
     new_email: EmailStr = None
 
 
-class ReaderDelete(BaseModel):
-    email: EmailStr
+class ReaderDelete(ReaderBase):
+    pass

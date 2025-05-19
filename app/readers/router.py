@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.readers.models import Reader, ReaderModel
-from app.readers.schemas import ReaderAdd, ReaderUpdate, ReaderDelete
+from app.readers.models import ReaderModel
+from app.readers.schemas import Reader, ReaderAdd, ReaderUpdate, ReaderDelete
 from app.users.utils import get_db, get_current_user
 from app.users.models import UserModel
 
@@ -43,6 +43,9 @@ def update_reader(data_reader: ReaderUpdate, db: Session = Depends(get_db)):
     if not check_reader:
         return HTTPException(status_code=401, detail={'Инф': 'Читатель не найден'})
     check_reader.name = data_reader.name if data_reader.name is not None else check_reader.name
+    check_email = db.query(ReaderModel).filter(ReaderModel.email == data_reader.new_email).first()
+    if check_email:
+        return HTTPException(status_code=401, detail={'Инф': 'Читатель с таким email уже существует'})
     check_reader.email = data_reader.new_email if data_reader.new_email is not None else check_reader.email
     db.commit()
     db.refresh(check_reader)
