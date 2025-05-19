@@ -23,6 +23,7 @@ def get_borrows(db: Session = Depends(get_db)):
 
 
 @router.post("/borrows/add")
+# def add_to_borrows(data_borrow: BorrowedBooksAdd, user_data: UserModel = Depends(get_current_user), db: Session = Depends(get_db)):
 def add_to_borrows(data_borrow: BorrowedBooksAdd, db: Session = Depends(get_db)):
     check_book = db.query(BookModel).filter(BookModel.id == data_borrow.book_id).first()
     if not check_book:
