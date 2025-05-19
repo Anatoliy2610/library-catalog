@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 
 class ReaderBase(BaseModel):
@@ -18,8 +19,8 @@ class ReaderAdd(ReaderBase):
 
 
 class ReaderUpdate(ReaderBase):
-    name: str = None
-    new_email: EmailStr = None
+    name: Optional[str] = None
+    new_email: Optional[EmailStr] = None
 
 
 class ReaderDelete(ReaderBase):

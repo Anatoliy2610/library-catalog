@@ -1,11 +1,12 @@
 from pydantic import BaseModel, Field
+from typing import Optional
 
 
 class BookBase(BaseModel):
     name: str
     author: str
-    publication: int = None
-    ISBN: str = None
+    publication: Optional[int] = None
+    ISBN: Optional[str] = None
     count: int = Field(..., description="Количество экземпляров", ge=0)
 
 
@@ -28,5 +29,5 @@ class BookUpdate(BookBase):
     count: int = None
 
 
-class BookDelete(BookBase):
-    pass
+class BookDelete(BaseModel):
+    name: str

@@ -5,4 +5,5 @@ __pycache__
 *.cast
 .env
 books.db
+test.db
 regist_primer/
