@@ -1,17 +1,16 @@
-from fastapi import APIRouter, HTTPException, status, Depends
 from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.users.pass_conf import password_hash, verify_password
-from app.users.models import UserModel, UserAuthModel, User
-from app.users.schemas import UserRegister
-from app.users.auth import get_db, create_access_token
-from app.users.user import get_current_user
-from app.users.utils import get_check_user
+from app.users.auth import create_access_token, get_db
 from app.users.db import add_to_db
+from app.users.models import User, UserAuthModel, UserModel
+from app.users.schemas import UserRegister
+from app.users.security import password_hash, verify_password
+from app.users.utils import get_check_user
 
-
-router = APIRouter(tags=['Пользователь'])
+router = APIRouter(tags=["Пользователь"])
 
 
 @router.get("/users", response_model=List[User])
@@ -27,13 +26,11 @@ def register_user(user_data: UserRegister, db: Session = Depends(get_db)) -> dic
             username=user_data.username,
             email=user_data.email,
             password_hash=password_hash(user_data.password),
-            db=db)
+            db=db,
+        )
     except ValueError as e:
-            raise HTTPException(
-                status_code=401,
-                detail=str(e)
-            )
-    return {'message': 'Вы успешно зарегистрированы!'}
+        raise HTTPException(status_code=401, detail=str(e))
+    return {"message": "Вы успешно зарегистрированы!"}
 
 
 @router.post("/login")
@@ -41,13 +38,7 @@ def auth_user(user_data: UserAuthModel, db: Session = Depends(get_db)):
     user = db.query(UserModel).filter(UserModel.email == user_data.email).first()
     if not user or not verify_password(user_data.password, user.hash_password):
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Неверное email или пароль'
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Неверное email или пароль"
         )
     access_token = create_access_token({"sub": str(user.id)})
-    return {'access_token': access_token, 'refresh_token': None}
-
-
-@router.get("/me/")
-def get_me(user_data: UserModel = Depends(get_current_user)):
-    return user_data
+    return {"access_token": access_token, "refresh_token": None}

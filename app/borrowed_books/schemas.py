@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel
+
 from app.books.schemas import Book
 from app.readers.schemas import Reader
 

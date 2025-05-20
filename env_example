@@ -1,2 +1,3 @@
 SQL_BD_URL=sqlite:///./name.db
 SECRET_KEY_TOKEN=''
+DATABASE_URL=postgresql://NAMEUSER:PASSWORD@localhost:PORT(0000)/NAME_DB

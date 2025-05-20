@@ -1,11 +1,10 @@
-from pydantic import BaseModel, EmailStr
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, Integer, String
 
 from app.database import Base
 
 
 class ReaderModel(Base):
-    __tablename__ = 'readers'
+    __tablename__ = "readers"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)

@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field
 from typing import Optional
+
+from pydantic import BaseModel, Field
 
 
 class BookBase(BaseModel):
@@ -8,7 +9,6 @@ class BookBase(BaseModel):
     publication: Optional[int] = None
     ISBN: Optional[str] = None
     count: int = Field(..., description="Количество экземпляров", ge=0)
-
 
 
 class Book(BookBase):

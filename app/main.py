@@ -1,11 +1,10 @@
 from fastapi import FastAPI
 
-from app.database import Base, engine
-from app.users.router import router as router_users
 from app.books.router import router as router_books
-from app.readers.router import router as router_readers
 from app.borrowed_books.router import router as router_borrow
-
+from app.database import Base, engine
+from app.readers.router import router as router_readers
+from app.users.router import router as router_users
 
 Base.metadata.create_all(bind=engine)
 

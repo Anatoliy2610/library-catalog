@@ -1,5 +1,6 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy import Column, Integer, String
+
 from app.database import Base
 
 
@@ -25,7 +26,7 @@ class UserAuth(BaseModel):
 
 
 class UserModel(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, index=True)

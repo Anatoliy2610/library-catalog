@@ -2,9 +2,9 @@ from fastapi import Depends, Header
 from sqlalchemy.orm import Session
 
 from app.users.auth import get_db
-from app.users.token import (check_authorization, parse_authorization_header, 
-                       decode_jwt_token, validate_token_type, 
-                       validate_token_expiration, get_user_from_db)
+from app.users.token import (check_authorization, decode_jwt_token,
+                             get_user_from_db, parse_authorization_header,
+                             validate_token_expiration, validate_token_type)
 
 
 def get_current_user(authorization: str = Header(None), db: Session = Depends(get_db)):
